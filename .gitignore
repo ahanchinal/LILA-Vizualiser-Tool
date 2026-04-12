@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Python pipeline
+pipeline/__pycache__/
+pipeline/*.pyc
+*.pyc
+__pycache__/
+
+# Raw source data (parquet files) — processed output in public/data/ IS committed
+player_data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Env
+.env
+.env.local
