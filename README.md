@@ -4,7 +4,7 @@ A browser-based tool for Level Designers to explore player behavior across LILA 
 
 ## Live Demo
 
-> Deployed URL: _(add after Vercel deployment)_
+> https://lila-vizualiser-tool.vercel.app/
 
 ## Features
 
