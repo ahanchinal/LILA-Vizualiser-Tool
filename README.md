@@ -8,12 +8,13 @@ A browser-based tool for Level Designers to explore player behavior across LILA 
 
 ## Features
 
-- **Player paths** — movement trails for humans (colored) and bots (gray)
-- **Event markers** — kills, deaths, loot pickups, and storm deaths as distinct markers
-- **Heatmap overlays** — traffic density, kill zones, and death zones across the full dataset
-- **Timeline playback** — scrub or auto-play any match with adjustable speed (1×–16×)
-- **Filters** — by map, date, and individual match
-- **Human vs bot distinction** — visual and filter-level separation
+- **Player paths** — movement trails for humans (colored per player) and bots (gray)
+- **Event markers** — kills, deaths, loot pickups, and storm deaths shown as distinct markers on the map
+- **Heatmap overlays** — traffic density, kill zones, and death zones aggregated across all sessions
+- **Timeline playback** — scrub or auto-play any match at speeds from 0.5× to 16×
+- **Session filters** — filter by map, date, duration, kill count, death count, player type, or session ID
+- **Session comparison** — load a second match alongside the primary one; compare match renders in a separate teal colour palette with its own swimlane track
+- **Onboarding tour** — a step-by-step walkthrough of every feature, shown on first load
 
 ## Tech Stack
 
@@ -25,55 +26,12 @@ A browser-based tool for Level Designers to explore player behavior across LILA 
 | Data pipeline | Python 3 + PyArrow + pandas + orjson |
 | Hosting | Vercel (static) |
 
-## Setup
+## Data
 
-### 1. Run the data pipeline (one-time)
-
-```bash
-cd pipeline
-pip install -r requirements.txt
-cd ..
-py pipeline/process_data.py
-```
-
-This reads all 1,243 parquet files from `player_data/` and outputs:
-- `public/data/index.json` — match manifest
-- `public/data/heatmaps.json` — pre-aggregated heatmaps
-- `public/data/match/*.json` — 796 per-match files
-- `public/minimaps/` — minimap images
-
-### 2. Install frontend dependencies
-
-```bash
-npm install
-```
-
-### 3. Run dev server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:5173](http://localhost:5173)
-
-### 4. Build for production
-
-```bash
-npm run build
-```
-
-Output goes to `dist/`.
-
-## Environment Variables
-
-None required. All data is static JSON served from `public/`.
-
-## Deployment (Vercel)
-
-1. Push repo to GitHub (include `public/data/` and `public/minimaps/`)
-2. Import repo in [vercel.com](https://vercel.com)
-3. Vercel auto-detects Vite — no configuration needed beyond `vercel.json`
-4. Deploy
+1,243 Apache Parquet files across 5 days (Feb 10–14) were processed by a Python pipeline into static JSON:
+- `public/data/index.json` — manifest of all 796 matches
+- `public/data/heatmaps.json` — pre-aggregated 32×32 heatmap grids per map
+- `public/data/match/*.json` — per-match event streams
 
 ## Project Structure
 
@@ -81,13 +39,13 @@ None required. All data is static JSON served from `public/`.
 lila-assignment/
 ├── pipeline/           # Python ETL script
 ├── public/
-│   ├── data/           # Generated JSON (run pipeline first)
-│   └── minimaps/       # Map images (copied by pipeline)
+│   ├── data/           # Processed JSON
+│   └── minimaps/       # Map images
 ├── src/
 │   ├── components/     # React components
 │   ├── constants/      # Map configs, event codes, colors
-│   ├── hooks/          # useMatchData
+│   ├── hooks/          # Data fetching
 │   ├── store/          # Zustand global state
 │   └── utils/          # Coordinate transform, color scale
-└── player_data/        # Raw parquet files (source data)
+└── INSIGHTS.md         # Key findings from the data
 ```
