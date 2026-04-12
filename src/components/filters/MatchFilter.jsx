@@ -92,11 +92,12 @@ export default function MatchFilter() {
     <div style={{ display:'flex', flexDirection:'column', height:'100%', minHeight:0, overflow:'hidden' }}>
 
       {/* Panel header */}
-      <div style={styles.panelHead}>
+      <div style={styles.panelHead} data-tour="tour-session-outliner">
         <span style={styles.panelTitle}>Session Outliner</span>
         <span style={styles.panelCount}>{totalVisible}</span>
         {/* Filter toggle button */}
         <div
+          data-tour="tour-filters"
           onClick={() => setDrawerOpen(o => !o)}
           style={{
             display:        'flex',
@@ -137,7 +138,7 @@ export default function MatchFilter() {
       </div>
 
       {/* Date filter — permanent tab strip */}
-      <div style={styles.dateRow}>
+      <div style={styles.dateRow} data-tour="tour-date-filter">
         {[{ key: null, label: 'All' }, ...DAYS_ORDER.filter(d => grouped[d]?.length > 0 || selectedDate === d).map(d => ({ key: d, label: DATE_LABELS[d] ?? d }))].map(({ key, label }) => {
           const active = selectedDate === key
           return (
@@ -214,7 +215,7 @@ export default function MatchFilter() {
           <DrawerSection label="Ranges">
             <div style={{ display: 'flex', gap: 4 }}>
               <RangeFilter
-                label="Dur"
+                label="Duration"
                 unit="s"
                 fullRange={fullDurRange}
                 value={activeDurRange}

@@ -21,6 +21,12 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Scratch files
+repomix-output.xml
+ui-concepts.html
+tour-mockup.html
+mockups.html
+
 # Env
 .env
 .env.local

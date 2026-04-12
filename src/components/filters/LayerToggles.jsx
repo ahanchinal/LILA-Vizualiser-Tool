@@ -12,7 +12,7 @@ const EVENT_LAYERS = [
   { key: 'showKillMarkers',  setter: 'setShowKillMarkers',  color: '#ff8c50', label: 'Kills'  },
   { key: 'showDeathMarkers', setter: 'setShowDeathMarkers', color: '#dc5090', label: 'Deaths' },
   { key: 'showLootMarkers',  setter: 'setShowLootMarkers',  color: '#00dcb4', label: 'Loot'   },
-  { key: 'showStormMarkers', setter: 'setShowStormMarkers', color: '#508cff', label: 'Storm'  },
+  { key: 'showStormMarkers', setter: 'setShowStormMarkers', color: '#508cff', label: 'Storm Deaths', ring: true },
 ]
 const HEATMAPS = [
   { mode: 'traffic', label: 'Traffic' },
@@ -30,7 +30,7 @@ const CMP_EVENT_LAYERS = [
   { key: 'showKillMarkers',  setter: 'setShowKillMarkers',  color: rgba(CMP_KILL_COLOR),  label: 'Kills'  },
   { key: 'showDeathMarkers', setter: 'setShowDeathMarkers', color: rgba(CMP_DEATH_COLOR), label: 'Deaths' },
   { key: 'showLootMarkers',  setter: 'setShowLootMarkers',  color: rgba(CMP_LOOT_COLOR),  label: 'Loot'   },
-  { key: 'showStormMarkers', setter: 'setShowStormMarkers', color: rgba(CMP_STORM_COLOR), label: 'Storm'  },
+  { key: 'showStormMarkers', setter: 'setShowStormMarkers', color: rgba(CMP_STORM_COLOR), label: 'Storm Deaths', ring: true },
 ]
 
 export default function LayerToggles() {
@@ -39,7 +39,7 @@ export default function LayerToggles() {
   const compareMatchId = useStore((s) => s.compareMatchId)
 
   return (
-    <div>
+    <div data-tour="tour-layers">
       {/* ── Primary session ── */}
       <PanelSection label="Primary" accent="#f5a623">
         <SubLabel>Players</SubLabel>
@@ -47,8 +47,8 @@ export default function LayerToggles() {
           <ToggleRow key={key} checked={store[key]} onChange={(v) => store[setter](v)} color={color} label={label} circle={circle} line={line} />
         ))}
         <SubLabel style={{ marginTop: 6 }}>Events</SubLabel>
-        {EVENT_LAYERS.map(({ key, setter, color, label }) => (
-          <ToggleRow key={key} checked={store[key]} onChange={(v) => store[setter](v)} color={color} label={label} circle />
+        {EVENT_LAYERS.map(({ key, setter, color, label, ring }) => (
+          <ToggleRow key={key} checked={store[key]} onChange={(v) => store[setter](v)} color={color} label={label} circle ring={ring} />
         ))}
       </PanelSection>
 
@@ -60,14 +60,14 @@ export default function LayerToggles() {
             <ToggleRow key={key} checked={store[key]} onChange={(v) => store[setter](v)} color={color} label={label} circle={circle} line={line} />
           ))}
           <SubLabel style={{ marginTop: 6 }}>Events</SubLabel>
-          {CMP_EVENT_LAYERS.map(({ key, setter, color, label }) => (
-            <ToggleRow key={key} checked={store[key]} onChange={(v) => store[setter](v)} color={color} label={label} circle />
+          {CMP_EVENT_LAYERS.map(({ key, setter, color, label, ring }) => (
+            <ToggleRow key={key} checked={store[key]} onChange={(v) => store[setter](v)} color={color} label={label} circle ring={ring} />
           ))}
         </PanelSection>
       )}
 
       {/* ── Heatmap ── */}
-      <PanelSection label="Heatmap">
+      <PanelSection label="Heatmap" dataTour="tour-heatmap">
         <div style={{ display: 'flex', gap: 4 }}>
           {HEATMAPS.map(({ mode, label }) => {
             const active = heatmapMode === mode
@@ -108,9 +108,9 @@ export default function LayerToggles() {
   )
 }
 
-function PanelSection({ label, accent, children }) {
+function PanelSection({ label, accent, children, dataTour }) {
   return (
-    <div style={{ padding: '10px', borderBottom: '1px solid #222326' }}>
+    <div style={{ padding: '10px', borderBottom: '1px solid #222326' }} data-tour={dataTour}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
         {accent && <div style={{ width: 3, height: 10, borderRadius: 1, background: accent, flexShrink: 0 }} />}
         <span style={{
@@ -137,7 +137,7 @@ function SubLabel({ children, style }) {
   )
 }
 
-function ToggleRow({ checked, onChange, color, label, circle, line }) {
+function ToggleRow({ checked, onChange, color, label, circle, line, ring }) {
   return (
     <div
       onClick={() => onChange(!checked)}
@@ -152,6 +152,13 @@ function ToggleRow({ checked, onChange, color, label, circle, line }) {
           width: 14, height: 2, borderRadius: 1,
           background: checked ? color : '#5a5e6a',
           flexShrink: 0, transition: 'all 0.1s',
+        }} />
+      ) : ring ? (
+        <div style={{
+          width: 10, height: 10, borderRadius: '50%',
+          background:  'transparent',
+          border:      `2px solid ${checked ? color : '#5a5e6a'}`,
+          flexShrink:  0, transition: 'all 0.1s',
         }} />
       ) : (
         <div style={{

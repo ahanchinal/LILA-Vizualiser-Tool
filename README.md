@@ -86,7 +86,7 @@ lila-assignment/
 ├── src/
 │   ├── components/     # React components
 │   ├── constants/      # Map configs, event codes, colors
-│   ├── hooks/          # useMatchData, usePlayback
+│   ├── hooks/          # useMatchData
 │   ├── store/          # Zustand global state
 │   └── utils/          # Coordinate transform, color scale
 └── player_data/        # Raw parquet files (source data)

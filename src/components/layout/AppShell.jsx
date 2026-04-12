@@ -4,6 +4,7 @@ import MapView from '../map/MapView.jsx'
 import MapSelector from '../map/MapSelector.jsx'
 import TimelineBar from '../timeline/TimelineBar.jsx'
 import Tooltip from '../ui/Tooltip.jsx'
+import Tour from '../ui/Tour.jsx'
 import useStore from '../../store/useStore.js'
 
 export default function AppShell() {
@@ -19,7 +20,7 @@ export default function AppShell() {
         </div>
 
         {/* Map selector — centered */}
-        <div style={styles.mapSelectorCenter}>
+        <div style={styles.mapSelectorCenter} data-tour="tour-map-selector">
           <MapSelector />
         </div>
 
@@ -31,17 +32,22 @@ export default function AppShell() {
       {/* Body */}
       <div style={styles.body}>
         <Sidebar />
-        <main style={styles.main}>
+        <main style={styles.main} data-tour="tour-map-canvas">
           <MapView />
         </main>
         <RightPanel />
       </div>
 
       {/* Timeline */}
-      <TimelineBar />
+      <div data-tour="tour-timeline">
+        <TimelineBar />
+      </div>
 
       {/* Tooltip */}
       <Tooltip />
+
+      {/* Tour */}
+      <Tour />
     </div>
   )
 }
