@@ -41,6 +41,8 @@ const useStore = create((set) => ({
     selectedMap: map,
     selectedMatchId: null,
     matchData: null,
+    compareMatchId: null,
+    compareMatchData: null,
     currentTime: 0,
     isPlaying: false,
     matchDuration: 0,
