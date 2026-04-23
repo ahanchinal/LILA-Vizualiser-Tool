@@ -12,7 +12,7 @@ This document outlines key findings derived from a 5-day sample of production te
 | Unique Matches | 796 |
 | Human vs. Bot Kills | 2,415 (Human kills Bot) vs. 3 (Human kills Human) |
 | Map Popularity | AmbroseValley (71.1%), Lockdown (21.5%), GrandRift (7.4%) |
-| Average K/D (Human vs. Bot) | 3.45 across all maps |
+| Average K/D (Human vs. Bot) | 3.44 across all maps |
 
 ---
 
@@ -34,7 +34,7 @@ Analysis of the 796 matches reveals that LILA BLACK currently functions primaril
 
 There is a significant disparity in player performance and map selection across the three available maps.
 
-**The Evidence:** The human-to-bot Kill/Death ratio on Lockdown is 2.54 — 39% lower than on GrandRift (4.17). Players are dying to AI significantly more often on this map.
+**The Evidence:** The human-to-bot Kill/Death ratio on Lockdown is 2.54 — 38% lower than on GrandRift (4.11). Players are dying to AI significantly more often on this map.
 
 **Data Pattern:** The lower performance correlates with lower map utilization. Lockdown accounts for only 21.5% of total matches, while AmbroseValley accounts for over 70%.
 
